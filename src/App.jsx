@@ -1,9 +1,21 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Routes, Route } from 'react-router-dom'
+import Home from './components/Home'
 
 function App() {
+  const books = [
+    {
+      title: 'book one',
+      author: 'author one',
+    },
+    {
+      title: 'book two',
+      author: 'author two',
+    },
+  ]
+
   return (
     <div className='bg-gray-800'>
-      <div className='bg-gradient-to-r from-slate-800 to-slate-700 flex flex-row-reverse px-4 py-1'>
+      <div className='bg-gradient-to-r from-slate-800 to-slate-700 flex flex-row justify-end px-4 py-1'>
         <NavLink
           to='/'
           className={({ isActive }) => (isActive ? 'isActive link' : 'link')}
@@ -17,7 +29,9 @@ function App() {
           Settings
         </NavLink>
       </div>
-      <div className='text-center'>Content here</div>
+      <Routes>
+        <Route path='/' element={<Home books={books} />} />
+      </Routes>
     </div>
   )
 }
