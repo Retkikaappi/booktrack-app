@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { ColorPicker, useColor } from 'react-color-palette'
 import 'react-color-palette/css'
+import { openLibSearch } from '../requests/book'
 
 const Settings = ({ bgColor, setBgColor, books, setBooks }) => {
   const [title, setTitle] = useState('')
   const [color, setColor] = useColor(bgColor)
+  const [libraryBooks, setLibraryBooks] = useState([])
   const colorTimeout = useRef(null)
 
   useEffect(() => {
@@ -21,10 +23,14 @@ const Settings = ({ bgColor, setBgColor, books, setBooks }) => {
     return () => clearTimeout(colorTimeout.current)
   }, [color])
 
-  const handleSearch = (value) => {
-    setTitle(value)
-    if (value.length >= 7) {
+  const handleSearch = async () => {
+    console.log(title)
+    if (title.length >= 7) {
       console.log('start searching openlib api')
+      const resp = await openLibSearch(title)
+      setLibraryBooks(resp.docs)
+      setTitle('')
+      console.log(resp)
     }
   }
 
@@ -48,6 +54,15 @@ const Settings = ({ bgColor, setBgColor, books, setBooks }) => {
         <button className='btn p-1' onClick={saveSettings}>
           Save settings and books as a cookie
         </button>
+        <p className='mt-4'>Current books:</p>
+        <ul className='mt-2'>
+          {books &&
+            books.map((e) => (
+              <li key={e.title}>
+                {e.title} - {e.author}
+              </li>
+            ))}
+        </ul>
       </div>
 
       <div className='p-4 mx-20'>
@@ -56,17 +71,22 @@ const Settings = ({ bgColor, setBgColor, books, setBooks }) => {
           <input
             className='p-1 rounded-md text-black'
             type='text'
-            onChange={({ target }) => handleSearch(target.value)}
+            onChange={({ target }) => setTitle(target.value)}
             value={title}
           />
         </label>
-        <button className='btn p-1 mx-1'>Search</button>
-        <p className='mt-4'>Current books:</p>
+        <button className='btn p-1 mx-1' onClick={handleSearch}>
+          Search
+        </button>
+        <p className='mt-4'>Search results:</p>
         <ul className='mt-2'>
-          {books &&
-            books.map((e) => (
-              <li key={e.tilte}>
-                {e.title} - {e.author}
+          {libraryBooks &&
+            libraryBooks.map((book) => (
+              <li key={book.key} className='p-2 border-2'>
+                <span className='font-bold'>{book.title}</span> by:{' '}
+                {book.author_name} - {book.number_of_pages_median} -{' '}
+                {book.first_publish_year}
+                <button className='btn mx-2 p-1'>expand</button>
               </li>
             ))}
         </ul>
