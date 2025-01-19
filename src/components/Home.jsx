@@ -9,13 +9,21 @@ const Home = ({ books }) => {
           justify-between
           h-80 w-60 
           bg-blue-600 border-2 
-          border-lime-200 m-4
-          text-xl font-bold leading-10
+          rounded-md
+          m-4
           p-10'
         >
-          <h4>{e.title}</h4>
-          <h4>{e.author}</h4>
-          <button className='border-2'>Done</button>
+          <h4 className='text-xl font-bold leading-10'>{e.title}</h4>
+          <p className='text-lg'>{e.author}</p>
+          <button
+            className='
+          border-2
+          text-md font-bold
+          rounded-md
+          hover:bg-blue-500'
+          >
+            Done
+          </button>
         </div>
       ))}
     </div>
