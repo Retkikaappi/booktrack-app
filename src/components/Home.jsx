@@ -15,15 +15,7 @@ const Home = ({ books }) => {
         >
           <h4 className='text-xl font-bold leading-10'>{e.title}</h4>
           <p className='text-lg'>{e.author}</p>
-          <button
-            className='
-          border-2
-          text-md font-bold
-          rounded-md
-          hover:bg-blue-500'
-          >
-            Done
-          </button>
+          <button className='btn'>Done</button>
         </div>
       ))}
     </div>
