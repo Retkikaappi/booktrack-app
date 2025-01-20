@@ -30,6 +30,7 @@ function App() {
       style={{
         backgroundColor: bgColor,
       }}
+      className=' min-h-dvh'
     >
       <div className='bg-gradient-to-r from-slate-800 to-slate-700 flex flex-row justify-end px-4 py-1'>
         <NavLink

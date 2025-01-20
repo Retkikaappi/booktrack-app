@@ -78,12 +78,8 @@ const Books = () => {
             onChange={({ target }) => setTitle(target.value)}
             value={title}
           />
-          <button className='btn p-1 mx-1' type='submit'>
-            Search
-          </button>
-          <button className='btn p-1 mx-1' onClick={() => nav(-1)}>
-            Go back
-          </button>
+          <button type='submit'>Search</button>
+          <button onClick={() => nav(-1)}>Go back</button>
         </form>
       </div>
 
@@ -116,15 +112,12 @@ const Books = () => {
                       <td>{book.number_of_pages_median}</td>
                       <td>{book.first_publish_year}</td>
                       <td>
-                        <Link to={`/books/${index}`} className='btn mx-2 p-1'>
-                          Expand
+                        <Link to={`/books/${index}`}>
+                          <button>Expand</button>
                         </Link>
                       </td>
                       <td>
-                        <button
-                          className='btn mx-2 p-1'
-                          onClick={() => handleAdd(book)}
-                        >
+                        <button onClick={() => handleAdd(book)}>
                           Add to books
                         </button>
                       </td>

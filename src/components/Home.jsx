@@ -1,10 +1,13 @@
+import { useRef } from 'react'
 import { useUser } from '../context/UserContext'
+import Toggle from './Toggle'
 
 const Home = () => {
   const {
     setUser,
     user: { bgColor, books },
   } = useUser()
+  const asReadRef = useRef()
 
   if (!books) {
     return (
@@ -23,14 +26,22 @@ const Home = () => {
   }
 
   const removeBook = (book) => {
-    if (window.confirm(`Are you sure you want to remove book ${book.title}`)) {
-      setUser({
-        bgColor,
-        books: books.filter((e) => e.key !== book.key && e),
-      })
-    }
+    setUser({
+      bgColor,
+      books: books.filter((e) => e.key !== book.key && e),
+    })
+    asReadRef.current.display()
+  }
 
-    console.log(books)
+  const linkToGoodreads = (book) => {
+    const title = book.title.replaceAll(' ', '+')
+    window.open(`https://www.goodreads.com/search?q=${title}`, '_blank')
+    setUser({
+      bgColor,
+      books: books.filter((e) => e.key !== book.key && e),
+    })
+
+    asReadRef.current.display()
   }
 
   return (
@@ -59,9 +70,12 @@ const Home = () => {
             </h4>
             <p className='text-lg'>{e.author}</p>
           </div>
-          <button className='btn' onClick={() => removeBook(e)}>
-            Done
-          </button>
+          <Toggle label='Mark as read' ref={asReadRef}>
+            <button className='goodreads' onClick={() => linkToGoodreads(e)}>
+              Mark as read on Goodreads
+            </button>
+            <button onClick={() => removeBook(e)}>Mark as read</button>
+          </Toggle>
         </div>
       ))}
     </div>

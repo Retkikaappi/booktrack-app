@@ -16,9 +16,7 @@ const Book = () => {
     return (
       <div>
         <p>Cannot find book</p>
-        <button onClick={() => nav(-1)} className='btn m-1 p-1'>
-          Go back
-        </button>
+        <button onClick={() => nav(-1)}>Go back</button>
       </div>
     )
   }
@@ -33,12 +31,8 @@ const Book = () => {
   return (
     <div className='flex flex-col items-center p-4'>
       <div>
-        <button className='btn m-1 p-1' onClick={handleAdd}>
-          Add book to books
-        </button>
-        <button className='btn m-1 p-1' onClick={() => nav(-1)}>
-          Cancel
-        </button>
+        <button onClick={handleAdd}>Add book to books</button>
+        <button onClick={() => nav(-1)}>Cancel</button>
         <h2>Title: {book.title}</h2>
         <h3>Author: {book.author_name}</h3>
         <p>First publish year: {book.first_publish_year}</p>

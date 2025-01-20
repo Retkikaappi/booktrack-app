@@ -26,22 +26,36 @@
   color: theme(colors.blue.400);
 }
 
-.btn {
+button {
   border: theme(colors.blue.950), theme(borderWidth.2) solid;
   font-size: theme(fontSize.base);
   font-weight: bold;
   border-radius: theme(borderRadius.sm);
   background-color: theme(colors.blue.700);
+  margin: theme(margin.1);
+  padding: theme(padding.1);
 }
 
-.btn:hover {
+button:hover {
   background-color: theme(colors.blue.500);
+}
+
+.goodreads {
+  background-color: #3d9363;
+}
+
+.goodreads:hover {
+  background-color: #55cc8b;
 }
 
 td,
 th {
   padding: 0.25rem 0.5rem;
   border: 2px solid white;
+}
+
+tr:nth-child(2n) {
+  background-color: theme(colors.gray.800);
 }
 
 tr:hover {

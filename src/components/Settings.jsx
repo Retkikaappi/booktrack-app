@@ -52,23 +52,32 @@ const Settings = () => {
       </div>
 
       <div>
-        <button className='btn p-1' onClick={saveSettings}>
+        <button onClick={saveSettings}>
           Save settings and books as a cookie
         </button>
         <p className='mt-4'>Current books:</p>
-        <ul className='mt-2'>
-          {books &&
-            books.map((e) => (
-              <li key={e.title}>
-                {e.title} - {e.author_name || 'Author?'}
-              </li>
-            ))}
-        </ul>
+        <ul className='mt-2'></ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+            </tr>
+          </thead>
+          <tbody className='text-start'>
+            {books &&
+              books.map((e) => (
+                <tr key={e.title}>
+                  <td>{e.title}</td> <td>{e.author_name || 'Author?'}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
 
       <div className='p-4 mx-20'>
         <NavLink to='/books' className='btn m-1 p-1'>
-          Search and add books
+          <button>Search and add books</button>
         </NavLink>
       </div>
     </div>
