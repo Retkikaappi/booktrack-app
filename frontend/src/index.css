@@ -43,3 +43,7 @@ th {
   padding: 0.25rem 0.5rem;
   border: 2px solid white;
 }
+
+tr:hover {
+  background-color: theme(colors.blue.900);
+}

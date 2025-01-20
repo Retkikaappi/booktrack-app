@@ -20,7 +20,9 @@ const Books = () => {
       setLoading(true)
       const resp = await openLibSearch(title)
       setLoading(false)
-      setLibrary(resp.docs)
+
+      const keys = books.map((e) => e.key)
+      setLibrary(resp.docs.filter((e) => !keys.includes(e.key)))
       setTitle('')
     } else {
       toast.error('Search minimum length is 5 letters', {

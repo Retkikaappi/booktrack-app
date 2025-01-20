@@ -4,6 +4,7 @@ import 'react-color-palette/css'
 import { useUser } from '../context/UserContext'
 
 import { NavLink } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const Settings = () => {
   const {
@@ -30,7 +31,12 @@ const Settings = () => {
   }, [color])
 
   const saveSettings = () => {
-    console.log('saving', bgColor, books)
+    Cookies.remove('userPreferences')
+    const data = { bgColor: bgColor || 'rgb(15, 23, 42)', books: books || [] }
+    Cookies.set('userPreferences', JSON.stringify(data), {
+      expires: 7,
+    })
+    alert('data saved')
   }
 
   return (

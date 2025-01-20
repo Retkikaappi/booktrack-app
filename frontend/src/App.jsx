@@ -5,6 +5,7 @@ import Books from './components/Books'
 import Book from './components/Book'
 import { useEffect } from 'react'
 import { useUser } from './context/UserContext'
+import Cookies from 'js-cookie'
 
 function App() {
   const {
@@ -13,7 +14,15 @@ function App() {
   } = useUser()
 
   useEffect(() => {
-    // load bg + books from cookie
+    const prefs = Cookies.get('userPreferences')
+    if (prefs) {
+      const { bgColor, books } = JSON.parse(prefs)
+      setUser({
+        bgColor,
+        books,
+      })
+      console.log(bgColor, books)
+    }
   }, [])
 
   return (

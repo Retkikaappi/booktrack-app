@@ -6,10 +6,18 @@ const Home = () => {
     user: { bgColor, books },
   } = useUser()
 
-  if (books.length === 0 || !books) {
+  if (!books) {
     return (
       <div className='text-center m-4'>
-        <p>No books :(</p>
+        <p>No books</p>
+      </div>
+    )
+  }
+
+  if (books.length === 0) {
+    return (
+      <div className='text-center m-4'>
+        <p>Books are empty</p>
       </div>
     )
   }
