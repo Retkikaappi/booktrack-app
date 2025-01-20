@@ -31,9 +31,21 @@ const Settings = () => {
   }, [color])
 
   const saveSettings = () => {
-    Cookies.remove('userPreferences')
-    const data = { bgColor: bgColor || 'rgb(15, 23, 42)', books: books || [] }
-    Cookies.set('userPreferences', JSON.stringify(data), {
+    const userData = {
+      bgColor: bgColor || 'rgb(15, 23, 42)',
+      books:
+        books.map((e) => {
+          return {
+            author_name: e.author_name,
+            first_publish_year: e.first_publish_year,
+            subject: e.subject,
+            title: e.title,
+            key: e.key,
+            cover_edition_key: e.cover_edition_key,
+          }
+        }) || [],
+    }
+    Cookies.set('userPreferences', JSON.stringify(userData), {
       expires: 7,
     })
     alert('data saved')
@@ -67,8 +79,9 @@ const Settings = () => {
           <tbody className='text-start'>
             {books &&
               books.map((e) => (
-                <tr key={e.title}>
-                  <td>{e.title}</td> <td>{e.author_name || 'Author?'}</td>
+                <tr key={e.key}>
+                  <td>{e.title}</td>
+                  <td>{e.author_name || 'Author?'}</td>
                 </tr>
               ))}
           </tbody>

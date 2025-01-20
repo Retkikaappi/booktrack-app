@@ -99,8 +99,8 @@ const Books = () => {
                   <th>Author</th>
                   <th>Pagecount</th>
                   <th>Release year</th>
-                  <th></th>
-                  <th></th>
+                  <th>-</th>
+                  <th>-</th>
                 </tr>
               </thead>
               <tbody>
