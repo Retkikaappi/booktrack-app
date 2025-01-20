@@ -1,12 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { ColorPicker, useColor } from 'react-color-palette'
 import 'react-color-palette/css'
-import { openLibSearch } from '../requests/book'
+import { useUser } from '../context/UserContext'
 
-const Settings = ({ bgColor, setBgColor, books, setBooks }) => {
-  const [title, setTitle] = useState('')
+import { NavLink } from 'react-router-dom'
+
+const Settings = () => {
+  const {
+    setUser,
+    user: { books, bgColor },
+  } = useUser()
   const [color, setColor] = useColor(bgColor)
-  const [libraryBooks, setLibraryBooks] = useState([])
+
   const colorTimeout = useRef(null)
 
   useEffect(() => {
@@ -15,24 +20,14 @@ const Settings = ({ bgColor, setBgColor, books, setBooks }) => {
     }
 
     colorTimeout.current = setTimeout(() => {
-      setBgColor(
-        `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`
-      )
+      setUser({
+        books,
+        bgColor: `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`,
+      })
     }, 1000)
 
     return () => clearTimeout(colorTimeout.current)
   }, [color])
-
-  const handleSearch = async () => {
-    console.log(title)
-    if (title.length >= 7) {
-      console.log('start searching openlib api')
-      const resp = await openLibSearch(title)
-      setLibraryBooks(resp.docs)
-      setTitle('')
-      console.log(resp)
-    }
-  }
 
   const saveSettings = () => {
     console.log('saving', bgColor, books)
@@ -59,37 +54,16 @@ const Settings = ({ bgColor, setBgColor, books, setBooks }) => {
           {books &&
             books.map((e) => (
               <li key={e.title}>
-                {e.title} - {e.author}
+                {e.title} - {e.author_name || 'Author?'}
               </li>
             ))}
         </ul>
       </div>
 
       <div className='p-4 mx-20'>
-        <label>
-          Book title{' '}
-          <input
-            className='p-1 rounded-md text-black'
-            type='text'
-            onChange={({ target }) => setTitle(target.value)}
-            value={title}
-          />
-        </label>
-        <button className='btn p-1 mx-1' onClick={handleSearch}>
-          Search
-        </button>
-        <p className='mt-4'>Search results:</p>
-        <ul className='mt-2'>
-          {libraryBooks &&
-            libraryBooks.map((book) => (
-              <li key={book.key} className='p-2 border-2'>
-                <span className='font-bold'>{book.title}</span> by:{' '}
-                {book.author_name} - {book.number_of_pages_median} -{' '}
-                {book.first_publish_year}
-                <button className='btn mx-2 p-1'>expand</button>
-              </li>
-            ))}
-        </ul>
+        <NavLink to='/books' className='btn m-1 p-1'>
+          Search and add books
+        </NavLink>
       </div>
     </div>
   )

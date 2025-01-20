@@ -1,19 +1,16 @@
 import { NavLink, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import Settings from './components/Settings'
-import { useEffect, useState } from 'react'
+import Books from './components/Books'
+import Book from './components/Book'
+import { useEffect } from 'react'
+import { useUser } from './context/UserContext'
+
 function App() {
-  const [bgColor, setBgColor] = useState('rgb(15, 23, 42)')
-  const [books, setBooks] = useState([
-    {
-      title: 'book one',
-      author: 'author one',
-    },
-    {
-      title: 'book two',
-      author: 'author two',
-    },
-  ])
+  const {
+    setUser,
+    user: { books, bgColor },
+  } = useUser()
 
   useEffect(() => {
     // load bg + books from cookie
@@ -40,18 +37,10 @@ function App() {
         </NavLink>
       </div>
       <Routes>
-        <Route path='/' element={<Home books={books} />} />
-        <Route
-          path='/settings'
-          element={
-            <Settings
-              books={books}
-              setBooks={setBooks}
-              bgColor={bgColor}
-              setBgColor={setBgColor}
-            />
-          }
-        />
+        <Route path='/' element={<Home />} />
+        <Route path='/settings' element={<Settings />} />
+        <Route path='/books' element={<Books />} />
+        <Route path='/books/:index' element={<Book />} />
       </Routes>
     </div>
   )
