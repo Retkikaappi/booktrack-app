@@ -12,7 +12,10 @@ const schema = mongoose.Schema({
   books: [
     {
       title: String,
-      author: String,
+      author_name: String,
+      number_of_pages_median: Number,
+      first_publish_year: Number,
+      key: String,
     },
   ],
 })
